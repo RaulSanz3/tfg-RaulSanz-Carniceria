@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../models/Usuario.php';
+require_once __DIR__ . '/../models/Cliente.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -17,18 +17,18 @@ class AuthController {
             $email    = trim($_POST['email'] ?? '');
             $password = trim($_POST['password'] ?? '');
 
-            $model = new Usuario();
-            $usuario = $model->getByEmail($email);
+            $model = new Cliente();
+            $Cliente = $model->getByEmail($email);
 
-            if ($usuario && password_verify($password, $usuario['password'])) {
-                if (!$usuario['verificado']) {
+            if ($Cliente && password_verify($password, $Cliente['password'])) {
+                if (!$Cliente['verificado']) {
                     $error = "Debes verificar tu cuenta antes de entrar. Revisa tu correo.";
                 } else {
-                    $_SESSION['usuario_id']     = $usuario['id'];
-                    $_SESSION['usuario_nombre'] = $usuario['nombre'];
-                    $_SESSION['usuario_rol']    = $usuario['rol'];
+                    $_SESSION['Cliente_id']     = $Cliente['id'];
+                    $_SESSION['Cliente_nombre'] = $Cliente['nombre'];
+                    $_SESSION['Cliente_rol']    = $Cliente['rol'];
 
-                    if ($usuario['rol'] === 'admin') {
+                    if ($Cliente['rol'] === 'admin') {
                         header('Location: /index.php?controller=admin&action=index');
                     } else {
                         header('Location: /index.php?controller=tienda&action=index');
@@ -50,7 +50,7 @@ class AuthController {
         $exito = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $model = new Usuario();
+            $model = new Cliente();
             $emailExistente = $model->getByEmail($_POST['email']);
 
             if ($emailExistente) {
@@ -89,7 +89,7 @@ class AuthController {
             $email  = trim($_POST['email'] ?? '');
             $codigo = trim($_POST['codigo'] ?? '');
 
-            $model = new Usuario();
+            $model = new Cliente();
             if ($model->verificar($email, $codigo)) {
                 $exito = "¡Cuenta verificada! Ya puedes iniciar sesión.";
             } else {

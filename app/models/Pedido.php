@@ -9,12 +9,12 @@ class Pedido {
         $this->conn = $db->getConnection();
     }
 
-    public function crear($id_usuario, $total) {
+    public function crear($id_cliente, $total) {
         $stmt = $this->conn->prepare("
-            INSERT INTO pedidos (id_usuario, total, estado)
+            INSERT INTO pedidos (id_cliente, total, estado)
             VALUES (?, ?, 'Recibido')
         ");
-        $stmt->execute([$id_usuario, $total]);
+        $stmt->execute([$id_cliente, $total]);
         return $this->conn->lastInsertId();
     }
 
@@ -26,13 +26,13 @@ class Pedido {
         return $stmt->execute([$id_pedido, $id_producto, $cantidad, $precio_unitario]);
     }
 
-    public function getByUsuario($id_usuario) {
+    public function getByCliente($id_cliente) {
         $stmt = $this->conn->prepare("
             SELECT * FROM pedidos
-            WHERE id_usuario = ?
+            WHERE id_cliente = ?
             ORDER BY fecha DESC
         ");
-        $stmt->execute([$id_usuario]);
+        $stmt->execute([$id_cliente]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -40,7 +40,7 @@ class Pedido {
         $stmt = $this->conn->prepare("
             SELECT p.*, u.nombre AS cliente_nombre, u.email AS cliente_email
             FROM pedidos p
-            JOIN usuarios u ON p.id_usuario = u.id
+            JOIN clientes u ON p.id_cliente = u.id
             WHERE p.id = ?
         ");
         $stmt->execute([$id]);
@@ -62,7 +62,7 @@ class Pedido {
         $stmt = $this->conn->prepare("
             SELECT p.*, u.nombre AS cliente_nombre, u.email AS cliente_email
             FROM pedidos p
-            JOIN usuarios u ON p.id_usuario = u.id
+            JOIN clientes u ON p.id_cliente = u.id
             ORDER BY p.fecha DESC
         ");
         $stmt->execute();

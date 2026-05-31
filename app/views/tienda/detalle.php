@@ -17,7 +17,7 @@
         <p class="text-muted"><?= htmlspecialchars($producto['descripcion']) ?></p>
         <p class="price-tag"><?= number_format($producto['precio'], 2) ?> € / <?= $producto['unidad_medida'] ?></p>
 
-        <?php if (isset($_SESSION['usuario_id'])): ?>
+        <?php if (isset($_SESSION['Cliente_id'])): ?>
         <form action="/index.php?controller=carrito&action=agregar" method="POST" class="d-flex align-items-center gap-3 mt-3">
             <input type="hidden" name="id_producto" value="<?= $producto['id'] ?>">
             <div>

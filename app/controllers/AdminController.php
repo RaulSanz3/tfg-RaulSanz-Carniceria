@@ -10,7 +10,7 @@ class AdminController {
     }
 
     private function requireAdmin() {
-        if (!isset($_SESSION['usuario_id']) || $_SESSION['usuario_rol'] !== 'admin') {
+        if (!isset($_SESSION['Cliente_id']) || $_SESSION['Cliente_rol'] !== 'admin') {
             header('Location: /index.php?controller=auth&action=login');
             exit;
         }

@@ -24,7 +24,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/index.php?controller=tienda&action=index">Tienda</a>
                 </li>
-                <?php if (isset($_SESSION['usuario_id'])): ?>
+                <?php if (isset($_SESSION['Cliente_id'])): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/index.php?controller=pedido&action=historial">Mis pedidos</a>
                     </li>
@@ -37,7 +37,7 @@
                             ?>
                         </a>
                     </li>
-                    <?php if ($_SESSION['usuario_rol'] === 'admin'): ?>
+                    <?php if ($_SESSION['Cliente_rol'] === 'admin'): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/index.php?controller=admin&action=index">Admin</a>
                     </li>
@@ -45,7 +45,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/index.php?controller=auth&action=logout">
                             <i class="bi bi-person-circle"></i>
-                            <?= htmlspecialchars($_SESSION['usuario_nombre']) ?> &nbsp;|&nbsp; Salir
+                            <?= htmlspecialchars($_SESSION['Cliente_nombre']) ?> &nbsp;|&nbsp; Salir
                         </a>
                     </li>
                 <?php else: ?>

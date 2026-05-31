@@ -2,7 +2,7 @@
 class CarritoController {
 
     public function agregar() {
-        if (!isset($_SESSION['usuario_id'])) {
+        if (!isset($_SESSION['Cliente_id'])) {
             header('Location: /index.php?controller=auth&action=login');
             exit;
         }
@@ -37,7 +37,7 @@ class CarritoController {
     }
 
     public function ver() {
-        if (!isset($_SESSION['usuario_id'])) {
+        if (!isset($_SESSION['Cliente_id'])) {
             header('Location: /index.php?controller=auth&action=login');
             exit;
         }

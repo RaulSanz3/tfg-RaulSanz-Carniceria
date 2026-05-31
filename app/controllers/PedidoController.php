@@ -4,7 +4,7 @@ require_once __DIR__ . '/../models/Pedido.php';
 class PedidoController {
 
     public function confirmar() {
-        if (!isset($_SESSION['usuario_id'])) {
+        if (!isset($_SESSION['Cliente_id'])) {
             header('Location: /index.php?controller=auth&action=login');
             exit;
         }
@@ -20,7 +20,7 @@ class PedidoController {
         }, 0);
 
         $model = new Pedido();
-        $id_pedido = $model->crear($_SESSION['usuario_id'], $total);
+        $id_pedido = $model->crear($_SESSION['Cliente_id'], $total);
 
         foreach ($carrito as $item) {
             $model->agregarDetalle($id_pedido, $item['id'], $item['cantidad'], $item['precio']);
@@ -34,13 +34,13 @@ class PedidoController {
     }
 
     public function historial() {
-        if (!isset($_SESSION['usuario_id'])) {
+        if (!isset($_SESSION['Cliente_id'])) {
             header('Location: /index.php?controller=auth&action=login');
             exit;
         }
 
         $model = new Pedido();
-        $pedidos = $model->getByUsuario($_SESSION['usuario_id']);
+        $pedidos = $model->getByCliente($_SESSION['Cliente_id']);
 
         $titulo = "Mis pedidos";
         $contenido = $this->render('tienda/historial', compact('pedidos'));
@@ -48,7 +48,7 @@ class PedidoController {
     }
 
     public function detalle() {
-        if (!isset($_SESSION['usuario_id'])) {
+        if (!isset($_SESSION['Cliente_id'])) {
             header('Location: /index.php?controller=auth&action=login');
             exit;
         }
@@ -59,7 +59,7 @@ class PedidoController {
         $detalle = $model->getDetalle($id);
 
         // Seguridad: el cliente solo puede ver sus propios pedidos
-        if (!$pedido || ($pedido['id_usuario'] != $_SESSION['usuario_id'] && $_SESSION['usuario_rol'] !== 'admin')) {
+        if (!$pedido || ($pedido['id_cliente'] != $_SESSION['Cliente_id'] && $_SESSION['Cliente_rol'] !== 'admin')) {
             header('Location: /index.php');
             exit;
         }

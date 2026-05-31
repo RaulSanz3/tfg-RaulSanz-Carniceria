@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
 
-class Usuario {
+class Cliente {
     private $conn;
-    private $table = 'usuarios';
+    private $table = 'clientes';
 
     public function __construct() {
         $db = new Database();
