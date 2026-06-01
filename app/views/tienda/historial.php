@@ -21,7 +21,16 @@
                 <td><?= date('d/m/Y H:i', strtotime($p['fecha'])) ?></td>
                 <td class="price-tag"><?= number_format($p['total'], 2) ?> €</td>
                 <td><span class="badge estado-<?= strtolower(str_replace(' ', '-', $p['estado'])) ?>"><?= $p['estado'] ?></span></td>
-                <td><a href="/index.php?controller=pedido&action=detalle&id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary">Ver detalle</a></td>
+                <td class="d-flex gap-2">
+                    <a href="/index.php?controller=pedido&action=detalle&id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary">Ver detalle</a>
+                    <?php if ($p['estado'] === 'Recibido'): ?>
+                        <a href="/index.php?controller=pedido&action=cancelar&id=<?= $p['id'] ?>"
+                           class="btn btn-sm btn-outline-danger"
+                           onclick="return confirm('¿Seguro que quieres cancelar este pedido?')">
+                           Cancelar
+                        </a>
+                    <?php endif; ?>
+                </td>
             </tr>
             <?php endforeach; ?>
         </tbody>

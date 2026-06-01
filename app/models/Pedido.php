@@ -73,4 +73,9 @@ class Pedido {
         $stmt = $this->conn->prepare("UPDATE pedidos SET estado=? WHERE id=?");
         return $stmt->execute([$estado, $id]);
     }
+
+    // Alias para usar desde PedidoController::cancelar()
+    public function cambiarEstado($id, $estado) {
+        return $this->updateEstado($id, $estado);
+    }
 }

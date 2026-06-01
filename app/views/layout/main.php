@@ -14,7 +14,7 @@
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="/index.php">
             <img src="/img/logo.png" alt="Logo" style="height:45px; width:auto; object-fit:contain;">
-            Carnicería-Salchicheria <span style="color:var(--dorado); margin-left:6px;">Jesús Sanz</span>
+            <span class="d-none d-sm-inline">Carnicería-Salchicheria </span><span style="color:var(--dorado); margin-left:6px;">Jesús Sanz</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>

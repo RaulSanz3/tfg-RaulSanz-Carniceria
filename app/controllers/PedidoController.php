@@ -58,7 +58,6 @@ class PedidoController {
         $pedido  = $model->getById($id);
         $detalle = $model->getDetalle($id);
 
-        // Seguridad: el cliente solo puede ver sus propios pedidos
         if (!$pedido || ($pedido['id_cliente'] != $_SESSION['Cliente_id'] && $_SESSION['Cliente_rol'] !== 'admin')) {
             header('Location: /index.php');
             exit;
@@ -67,6 +66,33 @@ class PedidoController {
         $titulo = "Detalle del pedido #" . $id;
         $contenido = $this->render('tienda/detalle_pedido', compact('pedido', 'detalle'));
         require_once __DIR__ . '/../views/layout/main.php';
+    }
+
+    public function cancelar() {
+        if (!isset($_SESSION['Cliente_id'])) {
+            header('Location: /index.php?controller=auth&action=login');
+            exit;
+        }
+
+        $id = (int)($_GET['id'] ?? 0);
+        $model = new Pedido();
+        $pedido = $model->getById($id);
+
+        // Seguridad: solo puede cancelar sus propios pedidos
+        if (!$pedido || $pedido['id_cliente'] != $_SESSION['Cliente_id']) {
+            header('Location: /index.php?controller=pedido&action=historial');
+            exit;
+        }
+
+        // Solo se puede cancelar si está en estado "Recibido"
+        if ($pedido['estado'] !== 'Recibido') {
+            header('Location: /index.php?controller=pedido&action=historial');
+            exit;
+        }
+
+        $model->cambiarEstado($id, 'Cancelado');
+        header('Location: /index.php?controller=pedido&action=historial');
+        exit;
     }
 
     private function render($vista, $datos = []) {
